@@ -31,19 +31,19 @@ DATA		:=	data
 INCLUDES	:=	include ../libstratosphere/libstratosphere/include ../libstratosphere/libvapours/include
 EXEFS_SRC	:=	exefs_src
 
-DEFINES	:=	-DDISABLE_IPC -DATMOSPHERE_GIT_BRANCH=\"$(AMSBRANCH)\" -DATMOSPHERE_GIT_REV=\"$(AMSREV)\" -DATMOSPHERE_BOARD_NINTENDO_SWITCH -DATMOSPHERE_IS_STRATOSPHERE
+DEFINES	:=	-DDISABLE_IPC -DATMOSPHERE_GIT_BRANCH=\"$(AMSBRANCH)\" -DATMOSPHERE_GIT_REV=\"$(AMSREV)\" -DATMOSPHERE_IS_STRATOSPHERE -DATMOSPHERE -DATMOSPHERE_ARCH_ARM64 -DATMOSPHERE_BOARD_NINTENDO_NX -D__SWITCH__ -DATMOSPHERE_OS_HORIZON -DATMOSPHERE_CPU_ARM_CORTEX_A57
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
+ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
 CFLAGS	:=	-g -Wall -Ofast -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
 CFLAGS	+=	$(INCLUDE) -D__SWITCH__
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++20
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
